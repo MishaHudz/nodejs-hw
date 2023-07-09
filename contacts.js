@@ -32,7 +32,7 @@ async function removeContact(contactId) {
     newContactArr.push(contact);
   }
 
-  deletedContact && fs.writeFile(contactsPath, JSON.stringify(newContactArr));
+  deletedContact && fs.writeFile(contactsPath, JSON.stringify(newContactArr, null, 2));
 
   return deletedContact;
 }
@@ -52,7 +52,7 @@ async function addContact(name, email, phone) {
   if (!isOlredyExist) {
     contactsArr.push(newContact);
 
-    fs.writeFile(contactsPath, JSON.stringify(contactsArr));
+    fs.writeFile(contactsPath, JSON.stringify(contactsArr, null, 2));
 
     return newContact;
   }

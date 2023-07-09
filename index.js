@@ -1,4 +1,4 @@
-const argv = require("yargs").argv;
+const yargs = require("yargs");
 
 const {
   listContacts,
@@ -7,28 +7,28 @@ const {
   addContact,
 } = require("./contacts");
 
-// TODO: рефакторити;
-function invokeAction({ action, id, name, email, phone }) {
+async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case "list":
-      // ...
-      break;
+      const contactList = await listContacts();
+      return console.log(contactList);
 
     case "get":
-      // ... id
-      break;
+      const contact = await getContactById(id);
+      return console.log(contact);
 
     case "add":
-      // ... name email phone
-      break;
+      const addedContact = await addContact(name, email, phone);
+      return console.log(addedContact);
 
     case "remove":
-      // ... id
-      break;
+      const deletedContact = await removeContact(id);
+      return console.log(deletedContact);
 
     default:
       console.warn("\x1B[31m Unknown action type!");
   }
 }
 
-// invokeAction(argv);
+const { argv } = yargs(process.argv);
+invokeAction(argv);
